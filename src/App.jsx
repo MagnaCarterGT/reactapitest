@@ -2,9 +2,22 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios';
+
 
 function App() {
   const [count, setCount] = useState(0)
+    const [apiResp, setApiResp] = useState({});
+
+    async function getApiRequest() {
+        return await axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(response => {
+                setApiResp(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
   return (
     <>
@@ -21,8 +34,13 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+
+        <button onClick={() => getApiRequest()}>
+            this will hit an API
+        </button>
+          {apiResp[0]?.body}
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Edit <code>src/App.jsx</code> and save to test HMRR
         </p>
       </div>
       <p className="read-the-docs">
