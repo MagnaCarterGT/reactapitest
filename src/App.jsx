@@ -3,11 +3,11 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from 'axios';
-
+import MuiGrid from '@mui/material/Grid';
 
 function App() {
-  const [count, setCount] = useState(0)
-    const [apiResp, setApiResp] = useState({});
+    const [count, setCount] = useState(0)
+    const [apiResp, setApiResp] = useState([]);
 
     async function getApiRequest() {
         return await axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -17,9 +17,9 @@ function App() {
             .catch(error => {
                 console.error(error);
             });
-    };
+    }
 
-  return (
+    return (
     <>
       <div>
         <a href="https://vite.dev" target="_blank">
@@ -38,7 +38,13 @@ function App() {
         <button onClick={() => getApiRequest()}>
             this will hit an API
         </button>
-          {apiResp[0]?.body}
+          <MuiGrid container spacing={3} sx={{ marginTop: 0, paddingTop: 4 }}>
+          {apiResp.map(entry => (
+              <MuiGrid item xs={6} md={4} lg={3}>
+                  {entry.body}
+              </MuiGrid>
+          ))}
+            </MuiGrid>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMRR
         </p>
@@ -47,7 +53,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+    )
 }
 
 export default App
