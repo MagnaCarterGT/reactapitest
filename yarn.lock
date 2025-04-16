@@ -617,6 +617,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
   integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
 
+"@remix-run/router@1.23.0-pre-v6.0":
+  version "1.23.0-pre-v6.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.23.0-pre-v6.0.tgz#0c269c7a359a15a4e19995f89738ddc5d804efd1"
+  integrity sha512-qEvtJDXDE5f77VpXZi5MRNWAASrddbV+zBiA235a+AsffsiwmFlSgnWv19NSi+yKWmWhQbK+pkmXwWpa2jASaw==
+
 "@rollup/rollup-android-arm-eabi@4.40.0":
   version "4.40.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.40.0.tgz#d964ee8ce4d18acf9358f96adc408689b6e27fe3"
@@ -1648,6 +1653,21 @@ react-refresh@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.2.tgz#3833da01ce32da470f1f936b9d477da5c7028bf9"
   integrity sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==
+
+react-router-dom@6.30.0-pre-v6.0:
+  version "6.30.0-pre-v6.0"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.0-pre-v6.0.tgz#3a31f911a54d2127c1ef13614cbf7364257f0a5a"
+  integrity sha512-WhFHhAzoHSRDjPRY4ZNvYGOeBAAgpptd2mcrE2Qmqd4k0EYfneA/QC1MnrX8JLpgGKljwE0268bSJ/YdXE6/mA==
+  dependencies:
+    "@remix-run/router" "1.23.0-pre-v6.0"
+    react-router "6.30.0-pre-v6.0"
+
+react-router@6.30.0-pre-v6.0:
+  version "6.30.0-pre-v6.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.0-pre-v6.0.tgz#13f6de4e947a2b50c006268de1aa8d0bb81c47e2"
+  integrity sha512-IVHqZ5NbIfN+yPIpPyF+4c6IrwdDpp77KG4cZJCuQcZ/6ebc+qt1iYLXxf7+hkxhkXKb5wRkgPY2PYOphLQFGg==
+  dependencies:
+    "@remix-run/router" "1.23.0-pre-v6.0"
 
 react-transition-group@^4.4.5:
   version "4.4.5"
