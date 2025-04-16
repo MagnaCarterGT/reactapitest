@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import '../App.css'
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
@@ -6,11 +6,25 @@ import Paper from '@mui/material/Paper';
 
 function Dogs() {
     const [apiResp, setApiResp] = useState([]);
+    const [page, setPage] = useState(1);
 
-    function getApiRequest() {
-        return axios.get('https://dogapi.dog/api/v2/breeds')
+    function getPreviousPage() {
+        let newPage = page - 1;
+        setPage(newPage);
+        getApiRequest(newPage);
+    }
+
+    function getNextPage() {
+        let newPage = page + 1;
+        setPage(newPage);
+        getApiRequest(newPage);
+    }
+
+    function getApiRequest(pageNumber) {
+        let url = `https://dogapi.dog/api/v2/breeds?page[number]=${pageNumber}`;
+        console.log("CALLING: ", url)
+        return axios.get(url)
             .then(response => {
-                console.log(response.data.data);
                 setApiResp(response.data.data);
             })
             .catch(error => {
@@ -18,10 +32,18 @@ function Dogs() {
             });
     }
 
+    useEffect(() => {
+        getApiRequest(1);
+    }, [])
+
     return (
         <div className="card">
-            <button onClick={() => getApiRequest()}>
-                this will hit an API
+            PAGE: {page}
+            <button disabled={page===1} onClick={() => getPreviousPage()}>
+                previous page
+            </button>
+            <button onClick={() => getNextPage()}>
+                nextPage
             </button>
             <Grid container spacing={3} sx={{ marginTop: 0, paddingTop: 4 }}>
                 {apiResp?.map(entry => (
