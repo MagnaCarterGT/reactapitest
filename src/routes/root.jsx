@@ -37,6 +37,9 @@ export default function Root() {
                         <li>
                             <a href={`/dogs`}>Dogs!</a>
                         </li>
+                        <li>
+                            <a href={`/pagerDuty`}>PagerDuty Exercise</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

@@ -8,6 +8,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Dogs from "./pages/Dogs.jsx";
 import Root from "./routes/root.jsx";
+import PagerDuty from "./pages/PagerDuty.jsx";
 import ErrorPage from "./error-page.jsx";
 
 const router = createBrowserRouter([
@@ -15,11 +16,14 @@ const router = createBrowserRouter([
         path: "/",
         element: <Root/>,
         errorElement: <ErrorPage />,
-
     },
     {
         path: "/dogs",
         element: <Dogs/>,
+    },
+    {
+        path: "/pagerDuty",
+        element: <PagerDuty/>,
     }
 ]);
 

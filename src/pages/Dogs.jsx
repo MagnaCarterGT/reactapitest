@@ -9,20 +9,15 @@ function Dogs() {
     const [page, setPage] = useState(1);
 
     function getPreviousPage() {
-        let newPage = page - 1;
-        setPage(newPage);
-        getApiRequest(newPage);
+        setPage(page - 1);
     }
 
     function getNextPage() {
-        let newPage = page + 1;
-        setPage(newPage);
-        getApiRequest(newPage);
+        setPage(page + 1);
     }
 
-    function getApiRequest(pageNumber) {
-        let url = `https://dogapi.dog/api/v2/breeds?page[number]=${pageNumber}`;
-        console.log("CALLING: ", url)
+    function getApiRequest() {
+        let url = `https://dogapi.dog/api/v2/breeds?page[number]=${page}`;
         return axios.get(url)
             .then(response => {
                 setApiResp(response.data.data);
@@ -33,12 +28,12 @@ function Dogs() {
     }
 
     useEffect(() => {
-        getApiRequest(1);
-    }, [])
+        getApiRequest();
+    }, [page])
 
     return (
         <div className="card">
-            PAGE: {page}
+            <p>PAGE: {page}</p>
             <button disabled={page===1} onClick={() => getPreviousPage()}>
                 previous page
             </button>
