@@ -17,6 +17,9 @@ function PagerDuty() {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({});
     const [teams, setTeams] = useState([]);
+    const [team, setTeam] = useState({});
+    const [contacts, setContacts] = useState([]);
+
 
     const headers = {
         'User-Agent': 'Mozilla/5.0',
@@ -33,22 +36,26 @@ function PagerDuty() {
         })
         .catch(error => {
             console.error(error);
-            //setIsLoading(false);
         });
     }
 
     function getUser(user) {
         let url = `https://api.pagerduty.com/users/${user.id}`;
+        setContacts([]);
         return axios.get(url, {
             headers
-        }).then(async response => {
+        }).then(response => {
             let user = response.data.user;
-            let team;
             if (user.teams[0]) {
-                await getResourceFromSelf(user.teams[0].self).then(resp => team = resp.team);
+                getResourceFromSelf(user.teams[0].self).then(resp => {
+                    setTeam(resp.team);
+                });
             }
-            console.log(team);
-            setTeams(team);
+            user.contact_methods.forEach(contact => {
+                getResourceFromSelf(contact.self).then(resp => {
+                    setContacts(oldArray => [...oldArray, resp.contact_method]);
+                });
+            })
             setUser(user);
         })
         .catch(error => {
@@ -180,15 +187,18 @@ function PagerDuty() {
             </Paper>
             <Paper elevation={0}>
                 <Stack spacing={1}>
-                    <div>Current User {JSON.stringify(user)}</div>
+                    {/*<div>Current User: {JSON.stringify(user)}</div>*/}
                     <div>Name: {user.name}</div>
-                    <div>Teams:</div>
-                    {user?.teams?.map(team => {
-                        return (<div>{team.summary}</div>);
-                    })}
+                    { team ?
+                        <>
+                            <div>Teams:</div>
+                            <div>Name: {team.summary}</div>
+                            <div>Description: {team.description}</div>
+                        </>
+                        : null }
                     <div>Contacts:</div>
-                    {user?.contact_methods?.map(contact => {
-                        return (<div>{contact.summary}</div>);
+                    {contacts.map(contact => {
+                        return (<div>{contact.summary}: {contact.address}</div>);
                     })}
                 </Stack>
             </Paper>
