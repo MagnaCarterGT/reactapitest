@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {Stack} from "@mui/material";
 
 function PagerDuty() {
     const [users, setUsers] = useState([]);
@@ -15,6 +16,7 @@ function PagerDuty() {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({});
+    const [teams, setTeams] = useState([]);
 
     const headers = {
         'User-Agent': 'Mozilla/5.0',
@@ -23,12 +25,31 @@ function PagerDuty() {
         'Authorization': `Token token=y_NbAkKc66ryYTWUXYEu`
     }
 
+    function getResourceFromSelf(url) {
+        return axios.get(url, {
+            headers
+        }).then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.error(error);
+            //setIsLoading(false);
+        });
+    }
+
     function getUser(user) {
         let url = `https://api.pagerduty.com/users/${user.id}`;
         return axios.get(url, {
             headers
-        }).then(response => {
-            setUser(response.data.user);
+        }).then(async response => {
+            let user = response.data.user;
+            let team;
+            if (user.teams[0]) {
+                await getResourceFromSelf(user.teams[0].self).then(resp => team = resp.team);
+            }
+            console.log(team);
+            setTeams(team);
+            setUser(user);
         })
         .catch(error => {
             console.error(error);
@@ -158,7 +179,18 @@ function PagerDuty() {
                 />
             </Paper>
             <Paper elevation={0}>
-                Current user {JSON.stringify(user)}
+                <Stack spacing={1}>
+                    <div>Current User {JSON.stringify(user)}</div>
+                    <div>Name: {user.name}</div>
+                    <div>Teams:</div>
+                    {user?.teams?.map(team => {
+                        return (<div>{team.summary}</div>);
+                    })}
+                    <div>Contacts:</div>
+                    {user?.contact_methods?.map(contact => {
+                        return (<div>{contact.summary}</div>);
+                    })}
+                </Stack>
             </Paper>
         </>
     )
